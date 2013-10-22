@@ -29,13 +29,15 @@ public class Hibernate {
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
         
-        EntidadBancaria entidadBancaria = new EntidadBancaria(9, "S34", "Bankia", "D418748");
+//        EntidadBancaria entidadBancaria = new EntidadBancaria(9, "S34", "Bankia", "D418748");
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save(entidadBancaria); //<|--- Aqui guardamos el objeto en la base de datos.
-
-        session.getTransaction().commit();
+        EntidadBancaria entidadBancaria =(EntidadBancaria)session.get(EntidadBancaria.class, 9);
+        System.out.println(entidadBancaria.getNombre());
+//        session.beginTransaction();
+//
+//        session.save(entidadBancaria); //<|--- Aqui guardamos el objeto en la base de datos.
+//
+//        session.getTransaction().commit();
         session.close();
 
         sessionFactory.close();
