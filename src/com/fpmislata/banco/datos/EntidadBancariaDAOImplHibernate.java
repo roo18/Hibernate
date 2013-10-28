@@ -18,32 +18,23 @@ import org.hibernate.service.ServiceRegistryBuilder;
  *
  * @author alumno
  */
-public class EntidadBancariaDAOImplHibernate extends GenericDAOImplHibernate<EntidadBancaria,Integer> implements EntidadBancariaDAO {
-
-   
-
-    public EntidadBancariaDAOImplHibernate(SessionFactory sessionFactory) {
-       super(sessionFactory) ;
-    }
-
+public class EntidadBancariaDAOImplHibernate extends GenericDAOImplHibernate<EntidadBancaria, Integer> implements EntidadBancariaDAO {
 
     @Override
     public List<EntidadBancaria> findByCodigo(String codigo) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("SELECT eb FROM EntidadBancaria eb WHERE codigoEntidad= ?");
         query.setString(1, codigo);
         List<EntidadBancaria> entidadesBancarias = query.list();
-        session.close();
         return entidadesBancarias;
     }
 
     @Override
     public List<EntidadBancaria> findByNombre(String nombre) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("SELECT eb FROM EntidadBancaria eb WHERE nombre= ?");
         query.setString(1, nombre);
         List<EntidadBancaria> entidadesBancarias = query.list();
-        session.close();
         return entidadesBancarias;
     }
 }

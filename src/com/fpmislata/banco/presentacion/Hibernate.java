@@ -4,6 +4,8 @@
  */
 package com.fpmislata.banco.presentacion;
 
+import com.fpmislata.banco.datos.EntidadBancariaDAOImplHibernate;
+import com.fpmislata.banco.datos.HibernateUtil;
 import com.fpmislata.banco.negocio.EntidadBancaria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,13 +23,16 @@ public class Hibernate {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SessionFactory sessionFactory;
-
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
-        sessionFactory.close();
+        
+        
+        HibernateUtil.buildSessionFactory();
+        HibernateUtil.openSessionAndBindToThread();
+        
+        EntidadBancariaDAOImplHibernate entidadBancariaDAOImplHibernate = new EntidadBancariaDAOImplHibernate();
+        EntidadBancaria entidadBancaria = entidadBancariaDAOImplHibernate.read(5);
+        System.out.println(entidadBancaria.getNombre());
+       
+        HibernateUtil.closeSessionAndUnbindFromThread();
+        HibernateUtil.closeSessionFactory();
     }
 }
